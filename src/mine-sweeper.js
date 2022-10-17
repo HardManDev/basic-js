@@ -6,8 +6,8 @@ const { NotImplementedError } = require('../extensions/index.js');
  * in the neighboring cells. Starting off with some arrangement of mines
  * we want to create a Minesweeper game setup.
  *
- * @param {Array<Array>} matrix
- * @return {Array<Array>}
+ * @param {Array<Array<boolean>>} matrix
+ * @return {Array<Array<Number>>}
  *
  * @example
  * matrix = [
@@ -23,9 +23,28 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  const result = []
+
+  for (let i = 0; i < matrix.length; i++) {
+    result.push([])
+    for (let j = 0; j < matrix[i].length; j++) {
+      const _ =[
+        matrix[i - 1] ? matrix[i - 1][j - 1] : null,
+        matrix[i - 1] ? matrix[i - 1][j] : null,
+        matrix[i - 1] ? matrix[i - 1][j + 1] : null,
+        matrix[i] ? matrix[i][j - 1] : null,
+        matrix[i] ? matrix[i][j + 1] : null,
+        matrix[i + 1] ? matrix[i + 1][j - 1] : null,
+        matrix[i + 1] ? matrix[i + 1][j] : null,
+        matrix[i + 1] ? matrix[i + 1][j + 1] : null
+      ].filter(e => typeof(e) === 'boolean' && e === true).length
+
+      result[i].push(_)
+    }
+  }
+
+  return result
 }
 
 module.exports = {
